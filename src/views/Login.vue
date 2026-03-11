@@ -1,5 +1,4 @@
 <template>
-
     <div class="container vh-100 d-flex justify-content-center align-items-center">
 
         <div class="card shadow p-4" style="width:400px">
@@ -18,60 +17,56 @@
             </button>
 
             <div v-if="error" class="text-danger mt-3 text-center">
-                Invalid ID
+                {{ errorMessage }}
             </div>
 
         </div>
 
     </div>
-
 </template>
 
 <script>
 export default {
-
     data() {
         return {
             userId: '',
-            error: false
+            error: false,
+            errorMessage: ''
         }
     },
 
     methods: {
-
         async login() {
-
             this.error = false
+            this.errorMessage = ''
+
+            // ✅ Local validation: ID should not be empty
+            if (!this.userId.trim()) {
+                this.error = true
+                this.errorMessage = "Please enter your Application ID."
+                return  // stop execution, do not call Google Sheets
+            }
 
             const scriptURL = "https://script.google.com/macros/s/AKfycbzJpVAvjbwWUKmE_HwVap-1AJJUk0XMrUSu1GdJGPLBMjsVk_30JFzeRRusp7dvEiEf-Q/exec"
 
             try {
-
-                const response = await fetch(`${scriptURL}?id=${this.userId}&callback=?`)
-
+                const response = await fetch(`${scriptURL}?id=${encodeURIComponent(this.userId)}`)
                 const data = await response.json()
 
                 if (data.valid) {
-
                     localStorage.setItem('access', 'true')
                     this.$router.push('/dashboard')
-
                 } else {
-
                     this.error = true
-
+                    this.errorMessage = "Invalid Application ID."
                 }
 
             } catch (err) {
-
                 console.error(err)
                 this.error = true
-
+                this.errorMessage = "An error occurred. Please try again."
             }
-
         }
-
     }
-
 }
 </script>
