@@ -43,11 +43,11 @@ export default {
 
             this.error = false
 
-            const scriptURL = "https://script.google.com/macros/s/AKfycby1ffrdz4QuylrH19i2uhVEhRUnRs-qsNGW505Xe17s3FUIjjGq7eP252qOXCZALGrfzg/exec"
+            const scriptURL = "https://script.google.com/macros/s/AKfycbxkLGxz__yS0qaIy1fc1H04ltHKDlKVKHqFm04zP91BWKudy9EpGEjEI7fmN6GNS5aXGg/exec"
 
             try {
 
-                const response = await fetch(`${scriptURL}?id=${this.userId}`)
+                const response = await fetch(`${scriptURL}?id=${this.userId}&callback=?`)
 
                 const data = await response.json()
 
