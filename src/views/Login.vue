@@ -43,7 +43,7 @@ export default {
 
             this.error = false
 
-            const scriptURL = "https://script.google.com/macros/s/AKfycbxkLGxz__yS0qaIy1fc1H04ltHKDlKVKHqFm04zP91BWKudy9EpGEjEI7fmN6GNS5aXGg/exec"
+            const scriptURL = "https://script.google.com/macros/s/AKfycbzJpVAvjbwWUKmE_HwVap-1AJJUk0XMrUSu1GdJGPLBMjsVk_30JFzeRRusp7dvEiEf-Q/exec"
 
             try {
 
