@@ -5,11 +5,12 @@
         <div class="card shadow p-4" style="width:400px">
 
             <h3 class="text-center mb-4">
-                User Guide Access
+                User Guide
             </h3>
 
             <div class="mb-3">
-                <input v-model="userId" type="text" class="form-control" placeholder="Enter Access ID" />
+                <input v-model="userId" type="text" class="form-control"
+                    placeholder="Enter Your Application ID ex. 2083265" />
             </div>
 
             <button class="btn btn-primary w-100" @click="login">
@@ -38,18 +39,32 @@ export default {
 
     methods: {
 
-        login() {
+        async login() {
 
-            const allowedIDs = ['ABC123', 'USER001', 'HIRAYA']
+            this.error = false
 
-            if (allowedIDs.includes(this.userId)) {
+            const scriptURL = "https://script.google.com/macros/s/AKfycby1ffrdz4QuylrH19i2uhVEhRUnRs-qsNGW505Xe17s3FUIjjGq7eP252qOXCZALGrfzg/exec"
 
-                localStorage.setItem('access', 'true')
+            try {
 
-                this.$router.push('/dashboard')
+                const response = await fetch(`${scriptURL}?id=${this.userId}`)
 
-            } else {
+                const data = await response.json()
 
+                if (data.valid) {
+
+                    localStorage.setItem('access', 'true')
+                    this.$router.push('/dashboard')
+
+                } else {
+
+                    this.error = true
+
+                }
+
+            } catch (err) {
+
+                console.error(err)
                 this.error = true
 
             }
